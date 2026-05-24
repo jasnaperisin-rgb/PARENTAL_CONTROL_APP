@@ -1,0 +1,24 @@
+# Python
+
+___pycache__/
+*.___pycache__
+
+
+# Build files
+dist/
+build/
+
+
+# Executables
+*.exe
+
+
+# Config ( ne želimo privatne podatke na GitHub)
+config.json
+
+
+# OS
+.DS_Store
+Thumbs.db
+
+
