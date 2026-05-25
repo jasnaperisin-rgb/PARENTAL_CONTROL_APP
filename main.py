@@ -8,7 +8,8 @@ import os
 import sys
 
 CONFIG_FILE = "config.json"
-ADMIN_PIN = (1234)
+ADMIN_PIN = "1234"
+
 
 
 # ==========   CONFIG  ==========
@@ -78,7 +79,7 @@ class AdminGUI:
         self.end_entry = tk.Entry(self.root)
         self.end_entry.pack()
 
-        tk.Button(self.root, text="Dodaj raspored", command=self.add.schedule).pack(pady=5)
+        tk.Button(self.root, text="Dodaj raspored", command=self.add_schedule).pack(pady=5)
 
         tk.Button(self.root, text="Obriši odabrani", command=self.delete_selected).pack(pady=5)
 
@@ -154,32 +155,49 @@ def monitor(root):
 
  #  =============   PIN   =============
 
-    def ask_pin():
-        r = tk.Tk()
-        r.withdraw()
-        pin = simpledialog.askstring("PIN", "Unesi admin PIN:", show="*")
-        return pin == ADMIN_PIN
+
+def ask_pin():
+    r = tk.Tk()
+    r.withdraw()
+
+    pin = simpledialog.askstring("PIN", "Unesi admin PIN:", show="*")
+
+    print("Uneseni PIN:", pin)   # DEBUG
+
+    if pin is None:
+        return False
+
+    return pin.strip() == ADMIN_PIN
         
 
  # ================MAIN  ===============
 
-    if __name__ == "__main__":
 
-        if len(sys.argv)> 1 and sys.argv[1] == "admin":
+       
+if __name__ == "__main__":
+    try:
+        if len(sys.argv) > 1 and sys.argv[1] == "admin":
+            print("ADMIN mode pokrenut")
+
             if ask_pin():
+                print("PIN OK")
                 app = AdminGUI()
                 app.run()
+            else:
+                print("Pogrešan PIN")
         else:
-            messagebox.showerror("Greška", "Pogrešan PIN")
+            print("CLIENT mode pokrenut")
 
-    else:
-        root = tk.Tk()
-        root.withdraw()
+            root = tk.Tk()
+            root.withdraw()
 
-        threading.Thread(target=monitor, args=(root,), daemon=True).start()
-        root.mainloop()
-                            
-        
+            threading.Thread(target=monitor, args=(root,), daemon=True).start()
+            root.mainloop()
+
+    except Exception as e:
+        print("GREŠKA:", e)
+        input("Press Enter...")
+
     
 
         
