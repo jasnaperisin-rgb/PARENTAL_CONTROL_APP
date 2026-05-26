@@ -88,7 +88,7 @@ Primjer:
 
 -Admin GUI
 - Lock screen
-- [GUI] (images/gui.png)
+-![Admin GUI] (images/gui.png)
 
 
 
